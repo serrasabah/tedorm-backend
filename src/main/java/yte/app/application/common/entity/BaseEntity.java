@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
-
+//intellij commit deneme
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
