@@ -6,7 +6,7 @@ import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
 import tedorm.app.application.menu.entity.Menu;
 import tedorm.app.application.menu.repository.MenuRepository;
-import tedorm.app.application.student.entity.Student;
+
 
 @Service
 @RequiredArgsConstructor

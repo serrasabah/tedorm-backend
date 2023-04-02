@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tedorm.app.application.applicant.entity.Applicant;
 import tedorm.app.application.applicant.repository.ApplicantRepository;
-import yte.app.application.common.response.MessageResponse;
-import yte.app.application.common.response.ResponseType;
+import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.common.response.ResponseType;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;

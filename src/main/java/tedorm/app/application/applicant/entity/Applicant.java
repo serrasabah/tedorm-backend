@@ -2,7 +2,7 @@ package tedorm.app.application.applicant.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import yte.app.application.common.entity.BaseEntity;
+import tedorm.app.application.common.entity.BaseEntity;
 
 import javax.persistence.Entity;
 

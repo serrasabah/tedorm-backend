@@ -1,7 +1,6 @@
 package tedorm.app.application.student.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tedorm.app.application.student.controller.requests.AddStudentRequest;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import tedorm.app.application.applicant.controller.requests.AddApplicantRequest;
 import tedorm.app.application.applicant.controller.responses.ApplicantResponse;
 import tedorm.app.application.applicant.service.ApplicantService;
-import yte.app.application.common.response.MessageResponse;
+import tedorm.app.application.common.response.MessageResponse;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
