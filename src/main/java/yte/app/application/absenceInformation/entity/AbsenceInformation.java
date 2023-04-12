@@ -13,19 +13,19 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class AbsenceInformation {
 
-    private  String address;
-    private  String hostName;
+    private String address;
+    private String hostName;
     private Long hostNumber;
 
-    public AbsenceInformation(String address, String hostName,Long hostNumber) {
+    public AbsenceInformation(String address, String hostName, Long hostNumber) {
         this.address = address;
         this.hostName = hostName;
         this.hostNumber = hostNumber;
     }
 
-    public void update(AbsenceInformation updateAdmin) {
-        this.address = address;
-        this.hostName = hostName;
-        this.hostNumber = hostNumber;
+    public void update(AbsenceInformation updateAbsenceInformation) {
+        this.address = updateAbsenceInformation.address;
+        this.hostName = updateAbsenceInformation.hostName;
+        this.hostNumber = updateAbsenceInformation.hostNumber;
     }
 }
