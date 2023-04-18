@@ -7,6 +7,7 @@ import yte.app.application.absenceInformation.repository.AbsenceInformationRepos
 import yte.app.application.common.response.MessageResponse;
 import yte.app.application.common.response.ResponseType;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -24,17 +25,19 @@ public class AbsenceInformationService {
         return absenceInformationRepository.findAll();
     }
 
-    public MessageResponse deleteAbsenceInformation(AbsenceInformation absenceInformation) {
-        absenceInformationRepository.delete(absenceInformation);
+    public MessageResponse deleteAbsenceInformation(Long id) {
+        absenceInformationRepository.deleteById(id);
 
         return new MessageResponse(ResponseType.SUCCESS, "Absence information has been deleted successfully");
     }
 
-    public MessageResponse updateAbsenceInformation(AbsenceInformation absenceInformation) {
+    public MessageResponse updateAbsenceInformation(Long id, AbsenceInformation absenceInformation) {
+        AbsenceInformation information = absenceInformationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Information not found"));
 
-        absenceInformation.update(absenceInformation);
+        information.update(absenceInformation);
 
-        absenceInformationRepository.save(absenceInformation);
+        absenceInformationRepository.save(information);
 
         return new MessageResponse(ResponseType.SUCCESS, "Absence information has been updated successfully");
     }

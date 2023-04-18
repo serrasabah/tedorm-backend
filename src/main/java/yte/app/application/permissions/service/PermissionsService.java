@@ -27,16 +27,18 @@ public class PermissionsService {
         //uyarı olarak ne geçilmeli?
     }
 
-    public MessageResponse deletePermissions(Permissions permissions) {
-        permissionsRepository.delete(permissions);
+    public MessageResponse deletePermissions(Long id) {
+        permissionsRepository.deleteById(id);
         return new MessageResponse(ResponseType.SUCCESS, "Permission information has been deleted successfully");
     }
 
-    public MessageResponse updatePermissions(Permissions permissions) {
+    public MessageResponse updatePermissions(Long id, Permissions updatePermission) {
+        Permissions permission= permissionsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Permission not found"));
 
-        permissions.update(permissions);
+        permission.update(updatePermission);
 
-        permissionsRepository.save(permissions);
+        permissionsRepository.save(permission);
 
         return new MessageResponse(ResponseType.SUCCESS, "Permission information has been updated successfully");
     }

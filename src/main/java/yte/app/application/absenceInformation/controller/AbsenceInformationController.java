@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import yte.app.application.absenceInformation.controller.requests.AddAbsenceInformationRequest;
 import yte.app.application.absenceInformation.controller.requests.UpdateAbsenceInformationRequest;
 import yte.app.application.absenceInformation.controller.responses.AbsenceInformationResponse;
-import yte.app.application.absenceInformation.entity.AbsenceInformation;
 import yte.app.application.absenceInformation.service.AbsenceInformationService;
 import yte.app.application.common.response.MessageResponse;
 
@@ -15,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/absenceInformation")
 @RequiredArgsConstructor
 @Validated
 public class AbsenceInformationController {
@@ -36,12 +35,12 @@ public class AbsenceInformationController {
     }
 
     @DeleteMapping("/{id}")
-    public MessageResponse deleteAbsenceInformation(@PathVariable @NotNull AbsenceInformation absenceInformation) {
-        return absenceInformationService.deleteAbsenceInformation(absenceInformation);
+    public MessageResponse deleteAbsenceInformation(@PathVariable @NotNull Long id) {
+        return absenceInformationService.deleteAbsenceInformation(id);
     }
 
     @PutMapping("/{id}")
-    public MessageResponse updateAbsenceInformation(@Valid @RequestBody UpdateAbsenceInformationRequest request) {
-        return absenceInformationService.updateAbsenceInformation(request.toDomainEntity());
+    public MessageResponse updateAbsenceInformation(@Valid @RequestBody UpdateAbsenceInformationRequest request, @PathVariable Long id) {
+        return absenceInformationService.updateAbsenceInformation(id,request.toDomainEntity());
     }
 }

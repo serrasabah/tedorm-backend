@@ -7,14 +7,13 @@ import yte.app.application.common.response.MessageResponse;
 import yte.app.application.permissions.controller.requests.AddPermissionsRequest;
 import yte.app.application.permissions.controller.requests.UpdatePermissionsRequest;
 import yte.app.application.permissions.controller.responses.PermissionsResponse;
-import yte.app.application.permissions.entity.Permissions;
 import yte.app.application.permissions.service.PermissionsService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/permissions")
 @RequiredArgsConstructor
 @Validated
 public class PermissionsController {
@@ -32,12 +31,12 @@ public class PermissionsController {
     }
 
     @DeleteMapping("/{id}")
-    public MessageResponse deletePermissions(@PathVariable @NotNull Permissions permissions) {
-        return permissionsService.deletePermissions(permissions);
+    public MessageResponse deletePermissions(@PathVariable @NotNull  Long id) {
+        return permissionsService.deletePermissions(id);
     }
 
     @PutMapping("/{id}")
-    public MessageResponse updatePermissions(@Valid @RequestBody UpdatePermissionsRequest request) {
-        return permissionsService.updatePermissions(request.toDomainEntity());
+    public MessageResponse updatePermissions(@Valid @RequestBody UpdatePermissionsRequest request,@PathVariable Long id) {
+        return permissionsService.updatePermissions(id, request.toDomainEntity());
     }
 }

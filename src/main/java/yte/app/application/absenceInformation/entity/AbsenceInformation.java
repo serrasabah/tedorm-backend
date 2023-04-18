@@ -4,6 +4,7 @@ package yte.app.application.absenceInformation.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import yte.app.application.common.entity.BaseEntity;
 
 import javax.persistence.Entity;
 
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AbsenceInformation {
+public class AbsenceInformation extends BaseEntity {
 
     private String address;
     private String hostName;
