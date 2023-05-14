@@ -26,7 +26,6 @@ public class UserService {
             return new MessageResponse(ResponseType.WARNING, "Username already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.getAuthorities().add(new Authority(user.getRole()));
         userRepository.save(user);
 
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");

@@ -34,6 +34,14 @@ public class StudentController {
                 .toList();
     }
 
+    @GetMapping("/name")
+    public List<StudentQueryModel> getStudentByUser() {
+        return studentService.getStudentByUser()
+                .stream()
+                .map(student -> new StudentQueryModel(student))
+                .toList();
+    }
+
     @GetMapping("/{id}")
     public StudentQueryModel getById(@NotNull @PathVariable Long id) {
         return new StudentQueryModel(studentService.getById(id));

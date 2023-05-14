@@ -3,14 +3,12 @@ import tedorm.app.application.authentication.entity.User;
 
 public record UserQueryModel(
         Long id,
-        String username,
-        String role
+        String username
 ) {
     public UserQueryModel(User user) {
         this(
                 user.getId(),
-                user.getUsername(),
-                user.getRole()
+                user.getUsername()
         );
     }
 }

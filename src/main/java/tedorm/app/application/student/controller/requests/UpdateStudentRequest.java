@@ -9,6 +9,6 @@ public record UpdateStudentRequest(
 ) {
 
     public Student toDomainEntity() {
-        return new Student(name, surname, email, null, null);
+        return new Student(name, surname, email, null, null, null, null, null);
     }
 }

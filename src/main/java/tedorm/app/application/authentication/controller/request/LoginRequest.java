@@ -9,13 +9,12 @@ public record LoginRequest(
         @NotBlank
         String username,
         @NotBlank
-        String password,
-        String role
+        String password
 
 
 ) {
         public User toDomainEntity() {
-                return new User(username,  password, role);
+                return new User(username,  password);
         }
 
 }

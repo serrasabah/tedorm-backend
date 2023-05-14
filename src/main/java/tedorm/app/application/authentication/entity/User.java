@@ -1,10 +1,13 @@
 package tedorm.app.application.authentication.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
+import tedorm.app.application.admin.entity.Admin;
 import tedorm.app.application.common.entity.BaseEntity;
+import tedorm.app.application.student.entity.Student;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,12 +17,20 @@ import java.util.List;
 @Entity(name = "users")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
     private String username;
     private String password;
-    private String role;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id", nullable = false)
+    private Admin admin;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -29,16 +40,18 @@ public class User extends BaseEntity implements UserDetails {
     )
     private List<Authority> authorities = new ArrayList<>();
 
-    public User(String username, String password, String role) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
     }
     public <E> User(String username, String password, List<Authority> authority) {
         super();
         this.username = username;
         this.password = password;
     }
+
+
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

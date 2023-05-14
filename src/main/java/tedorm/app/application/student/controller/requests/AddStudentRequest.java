@@ -3,8 +3,10 @@ package tedorm.app.application.student.controller.requests;
 import tedorm.app.application.student.entity.Student;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 public record AddStudentRequest(
         @NotBlank
@@ -16,12 +18,19 @@ public record AddStudentRequest(
         @Email
         String email,
         String tcKimlikNo,
-        @NotBlank
-        @Size(min = 7, max = 7)
-        String studentNumber
+
+        String studentNumber,
+
+
+        LocalDateTime age,
+
+
+        String roomNumber,
+
+        String university
 ) {
 
     public Student toDomainEntity() {
-        return new Student(name, surname, email, tcKimlikNo, studentNumber);
+        return new Student(name, surname, email, tcKimlikNo, studentNumber, age, roomNumber, university);
     }
 }
