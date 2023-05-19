@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addresss")
+@RequestMapping("/address")
 @RequiredArgsConstructor
 @Validated
 public class AddressController {
