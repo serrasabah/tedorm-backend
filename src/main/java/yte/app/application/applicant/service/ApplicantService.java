@@ -18,7 +18,7 @@ public class ApplicantService {
 
     public MessageResponse addApplicant(Applicant applicant) {
         applicantRepository.save(applicant);
-        return new MessageResponse(ResponseType.SUCCESS, "Address has been added successfully");
+        return new MessageResponse(ResponseType.SUCCESS, "Applicant has been added successfully");
     }
 
     public List<Applicant> getAllApplicants() {
@@ -27,7 +27,7 @@ public class ApplicantService {
 
     public Applicant getById(Long id) {
         return applicantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Address not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Applicant not found"));
     }
 
 }
