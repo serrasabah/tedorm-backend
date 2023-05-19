@@ -13,10 +13,11 @@ public record AddApplicantRequest(
         @NotBlank
         @Size(max = 25)
         String surname,
+        @NotBlank
         String phoneNumber,
         @Email
-        String email,
         @NotBlank
+        String email,
         String address,
         String university,
         int roomType

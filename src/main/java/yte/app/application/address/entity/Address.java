@@ -1,0 +1,24 @@
+package yte.app.application.address.entity;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import yte.app.application.common.entity.BaseEntity;
+
+import javax.persistence.Entity;
+
+@Entity
+@Getter
+@NoArgsConstructor
+public class Address extends BaseEntity {
+
+    private String name;
+    private String phoneNumber;
+    private String address;
+
+    public Address(String name, String phoneNumber,  String address) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+}
