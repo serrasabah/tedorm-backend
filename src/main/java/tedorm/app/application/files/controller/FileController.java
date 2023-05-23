@@ -30,29 +30,11 @@ public class FileController {
     @GetMapping("/{fileName}")
     public ResponseEntity<?> downloadFile(@PathVariable String fileName) {
         byte[] fileContent = storageService.downloadImage(fileName);
-        String contentType = getContentTypeForFileName(fileName);
+        String contentType = storageService.getContentTypeForFileName(fileName);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .body(fileContent);
-    }
-
-    private String getContentTypeForFileName(String fileName) {
-        String contentType;
-        if (fileName.endsWith(".pdf")) {
-            contentType = "application/pdf";
-        } else if (fileName.endsWith(".doc")) {
-            contentType = "application/msword";
-        } else if (fileName.endsWith(".docx")) {
-            contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-        } else if (fileName.endsWith(".xls")) {
-            contentType = "application/vnd.ms-excel";
-        } else if (fileName.endsWith(".xlsx")) {
-            contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        } else {
-            contentType = "application/octet-stream";
-        }
-        return contentType;
     }
 
     @GetMapping

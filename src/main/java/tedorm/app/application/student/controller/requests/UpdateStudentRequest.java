@@ -5,10 +5,12 @@ import tedorm.app.application.student.entity.Student;
 public record UpdateStudentRequest(
         String name,
         String surname,
-        String email
+        String studentNumber,
+
+        String phoneNumber
 ) {
 
     public Student toDomainEntity() {
-        return new Student(name, surname, email, null, null, null, null, null);
+        return new Student(name, surname, null, null, studentNumber, null, null, null, phoneNumber);
     }
 }

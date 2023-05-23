@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import tedorm.app.application.student.controller.requests.AddStudentRequest;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.student.controller.requests.UpdateStudentRequest;
+import tedorm.app.application.student.controller.responses.NameSurnameRoomNumStudentQueryModel;
 import tedorm.app.application.student.controller.responses.StudentQueryModel;
 import tedorm.app.application.student.service.StudentService;
 
@@ -27,10 +28,10 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentQueryModel> getAllStudents() {
+    public List<NameSurnameRoomNumStudentQueryModel> getAllStudents() {
         return studentService.getAllStudents()
                 .stream()
-                .map(student -> new StudentQueryModel(student))
+                .map(student -> new NameSurnameRoomNumStudentQueryModel(student))
                 .toList();
     }
 
@@ -55,5 +56,10 @@ public class StudentController {
     @PutMapping("/{id}")
     public MessageResponse updateStudent(@Valid @RequestBody UpdateStudentRequest request, @PathVariable Long id) {
         return studentService.updateStudent(id, request.toDomainEntity());
+    }
+
+    @GetMapping("/generatePassword")
+    public String generateRandomPassword() {
+        return studentService.generateRandomPassword();
     }
 }

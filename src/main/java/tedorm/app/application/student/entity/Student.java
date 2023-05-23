@@ -9,6 +9,7 @@ import tedorm.app.application.common.entity.BaseEntity;
 import tedorm.app.application.files.entity.FileData;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +25,23 @@ public class Student extends BaseEntity {
     private String email;
     private String tcKimlikNo;
     private String studentNumber;
-    private LocalDateTime age;
+    private LocalDate age;
 
     private String roomNumber;
 
     private String university;
+
+    private String phoneNumber;
 
     public Student(String name,
                    String surname,
                    String email,
                    String tcKimlikNo,
                    String studentNumber,
-                   LocalDateTime age,
+                   LocalDate age,
                    String roomNumber,
-                   String university) {
+                   String university,
+                   String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -46,9 +50,11 @@ public class Student extends BaseEntity {
         this.age = age;
         this.roomNumber = roomNumber;
         this.university = university;
+        this.phoneNumber = phoneNumber;
     }
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)

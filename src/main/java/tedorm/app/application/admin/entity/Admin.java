@@ -20,7 +20,7 @@ public class Admin extends BaseEntity {
 
     private  String name;
     private  String surname;
-
+    
     @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 

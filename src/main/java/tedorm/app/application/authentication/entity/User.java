@@ -21,16 +21,17 @@ import java.util.List;
 @NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
+    @Column(unique=true)
     private String username;
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id", nullable = false)
+    @JoinColumn(name = "admin_id", nullable = true)
     private Admin admin;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "student_id", nullable = true)
+    private Student student;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
