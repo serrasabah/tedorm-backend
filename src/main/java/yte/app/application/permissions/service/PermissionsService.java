@@ -14,14 +14,15 @@ import javax.persistence.EntityNotFoundException;
 public class PermissionsService {
 
     //TO-DO  absence information ile olan bağlantı sağlanacak.
+    //TO-DO
     private final PermissionsRepository permissionsRepository;
 
-    public Permissions viewPermission(Long id) {
+    public Permissions getPermissions(Long id) {
         return permissionsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Permission not found"));
     }
 
-    public MessageResponse getPermissions(Permissions permissions) {
+    public MessageResponse addPermissions(Permissions permissions) {
         permissionsRepository.save(permissions);
         return new MessageResponse(ResponseType.SUCCESS, "Permission information has been added successfully");
         //uyarı olarak ne geçilmeli?

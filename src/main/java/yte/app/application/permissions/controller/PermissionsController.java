@@ -21,13 +21,13 @@ public class PermissionsController {
     private final PermissionsService permissionsService;
 
     @GetMapping("/{id}")
-    public PermissionsResponse viewPermission(@NotNull @PathVariable Long id) {
-        return new PermissionsResponse(permissionsService.viewPermission(id));
+    public PermissionsResponse getPermissions(@NotNull @PathVariable Long id) {
+        return new PermissionsResponse(permissionsService.getPermissions(id));
     }
 
     @PostMapping
-    public MessageResponse getPermissions(@Valid @RequestBody AddPermissionsRequest addPermissionsRequest) {
-        return permissionsService.getPermissions(addPermissionsRequest.toDomainEntity());
+    public MessageResponse addPermissions(@Valid @RequestBody AddPermissionsRequest addPermissionsRequest) {
+        return permissionsService.addPermissions(addPermissionsRequest.toDomainEntity());
     }
 
     @DeleteMapping("/{id}")
