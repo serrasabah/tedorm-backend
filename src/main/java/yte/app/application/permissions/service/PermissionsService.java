@@ -8,6 +8,7 @@ import yte.app.application.permissions.entity.Permissions;
 import yte.app.application.permissions.repository.PermissionsRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,9 @@ public class PermissionsService {
     public Permissions getPermissions(Long id) {
         return permissionsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Permission not found"));
+    }
+    public List<Permissions> getAllPermissions() {
+        return permissionsRepository.findAll();
     }
 
     public MessageResponse addPermissions(Permissions permissions) {

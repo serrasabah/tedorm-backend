@@ -11,6 +11,7 @@ import yte.app.application.permissions.service.PermissionsService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping("/permissions")
@@ -24,7 +25,13 @@ public class PermissionsController {
     public PermissionsResponse getPermissions(@NotNull @PathVariable Long id) {
         return new PermissionsResponse(permissionsService.getPermissions(id));
     }
-
+    @GetMapping
+    public List<PermissionsResponse> getAllPermissions() {
+        return permissionsService.getAllPermissions()
+                .stream()
+                .map(PermissionsResponse::new)
+                .toList();
+    }
     @PostMapping
     public MessageResponse addPermissions(@Valid @RequestBody AddPermissionsRequest addPermissionsRequest) {
         return permissionsService.addPermissions(addPermissionsRequest.toDomainEntity());
