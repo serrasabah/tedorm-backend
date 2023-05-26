@@ -5,6 +5,8 @@ import tedorm.app.application.files.entity.FileData;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Blob;
+import java.util.List;
 
 @Builder
 public record AddFileRequest (
@@ -15,7 +17,7 @@ public record AddFileRequest (
     String type,
 
     String filename,
-    byte[] imageData
+    Blob imageData
 
 ) {
 
