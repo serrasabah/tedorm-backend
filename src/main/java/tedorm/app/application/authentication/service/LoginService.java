@@ -23,6 +23,7 @@ public class LoginService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+    public  String authority = " ";
     public MessageResponseID login(LoginRequest loginRequest) {
         var preAuthentication = new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password());
         try {
@@ -34,10 +35,11 @@ public class LoginService {
                     orElseThrow(() -> new UsernameNotFoundException("User not found."));
             Long id = user.getId();
 
+            authority = newContext.getAuthentication().getAuthorities().stream().toList().get(0).getAuthority();
 
-            return new MessageResponseID(ResponseType.SUCCESS, "Login is successful",id);
+            return new MessageResponseID(ResponseType.SUCCESS, "Login is successful", id, authority);
         } catch (AuthenticationException e) {
-            return new MessageResponseID(ResponseType.ERROR, "the username or password is incorrect please try again",0L);
+            return new MessageResponseID(ResponseType.ERROR, "the username or password is incorrect please try again",0L,authority);
         }
     }
 
