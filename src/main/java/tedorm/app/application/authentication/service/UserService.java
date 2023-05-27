@@ -9,6 +9,9 @@ import tedorm.app.application.authentication.entity.User;
 import tedorm.app.application.authentication.repository.UserRepository;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
+import tedorm.app.application.student.entity.EmailDetails;
+import tedorm.app.application.student.service.EmailService;
+import tedorm.app.application.student.service.StudentService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -19,6 +22,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final StudentService studentService;
+    private final EmailService emailService;
 
     @Transactional
     public MessageResponse addUsers(User user) {
@@ -61,6 +66,29 @@ public class UserService {
         user.update(updatedUser);
         userRepository.save(user);
 
+        return new MessageResponse(ResponseType.SUCCESS, "User has been updated successfully");
+    }
+
+    @Transactional
+    public MessageResponse forgotPassword(String email) {
+
+        if(!studentService.emailValidation(email)){
+            return new MessageResponse(ResponseType.WARNING, "Invalid Email Address");
+        }
+        User users = userRepository.findByUsername(email).orElseThrow();
+        if(users.getId()==null){
+            return new MessageResponse(ResponseType.WARNING, "sisteme kayıtlı değilsiniz");
+        }
+        String password = studentService.generateRandomPassword();
+        EmailDetails details = new EmailDetails();
+        details.setRecipient(email);
+        details.setSubject("TEDORM USER INFORMATION");
+        details.setMsgBody(" yeni şifreniz: " + password + " Lütfen güvenliğiniz için şifrenizi profil sayfanızda değiştiriniz.");
+        boolean result = emailService.sendSimpleMail(details);
+        if(!result){
+            return new MessageResponse(ResponseType.WARNING, "mail could not be sent");
+        }
+        users.setPassword(passwordEncoder.encode(password));
         return new MessageResponse(ResponseType.SUCCESS, "User has been updated successfully");
     }
 }

@@ -40,6 +40,7 @@ public class FileService {
 
     public MessageResponse uploadImage(MultipartFile file, String name, Long id) throws IOException, SQLException {
         Student student = studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        List<FileData> fileDataList = fileRepository.findByStudentId(id);
 
         Blob imageData = new SerialBlob(FileUtils.compressImage(file.getBytes()));
 
@@ -51,8 +52,12 @@ public class FileService {
                 .student(student)
                 .build();
 
+        if (fileDataList.stream().anyMatch(x -> x.getName().equals(fileData.getName()))) {
+            return new MessageResponse(ResponseType.WARNING, fileData.getName() + " önceden yüklenmiş!");
+        }
+
         if (fileData == null || !(Arrays.stream(variableFileTypes).anyMatch(type -> fileData.getType().contains(type)))) {
-            return new MessageResponse(ResponseType.WARNING, "ERROR");
+            return new MessageResponse(ResponseType.WARNING, "Dosya tipi uygun değil !");
         }
 
         fileRepository.save(fileData);

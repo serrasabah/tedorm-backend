@@ -3,14 +3,13 @@ package tedorm.app.application.student.controller.requests;
 import tedorm.app.application.student.entity.Student;
 
 public record UpdateStudentRequest(
-        String name,
-        String surname,
-        String studentNumber,
-
-        String phoneNumber
+        String email,
+        String phoneNumber,
+         String university,
+        String roomNumber
 ) {
 
     public Student toDomainEntity() {
-        return new Student(name, surname, null, null, studentNumber, null, null, null, phoneNumber);
+        return new Student(null, null, email, null, null, null, roomNumber, university, phoneNumber);
     }
 }
