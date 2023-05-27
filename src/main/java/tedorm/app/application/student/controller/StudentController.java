@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tedorm.app.application.student.controller.requests.AddStudentRequest;
 import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.student.controller.requests.ChangePasswordRequest;
 import tedorm.app.application.student.controller.requests.UpdateStudentRequest;
 import tedorm.app.application.student.controller.responses.NameSurnameRoomNumStudentQueryModel;
 import tedorm.app.application.student.controller.responses.StudentQueryModel;
@@ -26,7 +27,10 @@ public class StudentController {
     public MessageResponse addStudent(@Valid @RequestBody AddStudentRequest addStudentRequest) {
         return studentService.addStudent(addStudentRequest.toDomainEntity());
     }
-
+    @PostMapping("/changePassword/{id}")
+    public MessageResponse changePassword(@Valid @RequestBody ChangePasswordRequest request, @PathVariable Long id) {
+        return studentService.changePassword(id, request);
+    }
     @GetMapping
     public List<NameSurnameRoomNumStudentQueryModel> getAllStudents() {
         return studentService.getAllStudents()

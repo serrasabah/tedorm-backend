@@ -1,7 +1,10 @@
 package tedorm.app.application.student.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tedorm.app.application.authentication.entity.Authority;
@@ -9,6 +12,7 @@ import tedorm.app.application.authentication.entity.User;
 import tedorm.app.application.authentication.repository.UserRepository;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
+import tedorm.app.application.student.controller.requests.ChangePasswordRequest;
 import tedorm.app.application.student.controller.responses.StudentQueryModel;
 import tedorm.app.application.student.entity.EmailDetails;
 import tedorm.app.application.student.entity.Student;
@@ -21,6 +25,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.apache.naming.SelectorContext.prefix;
+
 @Service
 @RequiredArgsConstructor
 public class StudentService {
@@ -30,6 +36,7 @@ public class StudentService {
     private final PasswordEncoder passwordEncoder;
 
     private final EmailService emailService;
+
 
     public MessageResponse addStudent(Student student) {
         if(studentRepository.existsByEmail(student.getEmail())){
@@ -113,5 +120,27 @@ public class StudentService {
                 .matcher(emailAddress)
                 .matches();
     }
+
+
+    public MessageResponse changePassword(Long id, ChangePasswordRequest passwordFields) {
+        User user = userRepository.findByStudentId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+
+        String encodedPassword = user.getPassword();
+        String plainTextPassword = passwordFields.getEskiSifre();
+
+        if (passwordEncoder.matches(plainTextPassword, encodedPassword)) {
+            if (passwordFields.getYeniSifre().equals(passwordFields.getYeniSifreTekrar())) {
+                String newEncodedPassword = passwordEncoder.encode(passwordFields.getYeniSifre());
+                user.setPassword(newEncodedPassword);
+                userRepository.save(user);
+                return new MessageResponse(ResponseType.SUCCESS, "Şifre değiştirildi");
+            }
+        }
+
+        return new MessageResponse(ResponseType.ERROR, "Şifreler uyuşmuyor");
+    }
+
+
 
 }
