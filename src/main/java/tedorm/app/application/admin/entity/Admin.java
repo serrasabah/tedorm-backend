@@ -30,7 +30,7 @@ public class Admin extends BaseEntity {
     }
 
     public void update(Admin updateAdmin) {
-        this.name = name;
-        this.surname = surname;
+        this.name = updateAdmin.name;
+        this.surname = updateAdmin.surname;
     }
 }

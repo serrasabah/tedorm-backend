@@ -13,13 +13,18 @@ public class Applicant extends BaseEntity {
 
     private String name;
     private String surname;
+    private String phoneNumber;
+    private  String email;
+    private String address;
     private String university;
     private int roomType;
 
-
-    public Applicant(String name, String surname, String university, int roomType) {
+    public Applicant(String name, String surname, String phoneNumber, String email, String address, String university, int roomType) {
         this.name = name;
         this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
         this.university = university;
         this.roomType = roomType;
     }

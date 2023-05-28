@@ -37,4 +37,5 @@ public class ApplicantController {
     public ApplicantResponse getById(@NotNull @PathVariable Long id) {
         return new ApplicantResponse(applicantService.getById(id));
     }
+
 }
