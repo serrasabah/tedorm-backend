@@ -3,11 +3,11 @@ package yte.app.application.absenceInformation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import tedorm.app.application.common.response.MessageResponse;
 import yte.app.application.absenceInformation.controller.requests.AddAbsenceInformationRequest;
 import yte.app.application.absenceInformation.controller.requests.UpdateAbsenceInformationRequest;
 import yte.app.application.absenceInformation.controller.responses.AbsenceInformationResponse;
 import yte.app.application.absenceInformation.service.AbsenceInformationService;
-import yte.app.application.common.response.MessageResponse;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

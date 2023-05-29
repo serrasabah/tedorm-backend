@@ -1,6 +1,6 @@
-package yte.app.application.permissions.controller.responses;
+package tedorm.app.application.permissions.controller.responses;
 
-import yte.app.application.permissions.entity.Permissions;
+import tedorm.app.application.permissions.entity.Permissions;
 
 import java.time.LocalDateTime;
 

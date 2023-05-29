@@ -1,11 +1,11 @@
-package yte.app.application.permissions.service;
+package tedorm.app.application.permissions.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yte.app.application.common.response.MessageResponse;
-import yte.app.application.common.response.ResponseType;
-import yte.app.application.permissions.entity.Permissions;
-import yte.app.application.permissions.repository.PermissionsRepository;
+import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.common.response.ResponseType;
+import tedorm.app.application.permissions.entity.Permissions;
+import tedorm.app.application.permissions.repository.PermissionsRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;

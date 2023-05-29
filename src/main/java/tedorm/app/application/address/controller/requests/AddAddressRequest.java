@@ -1,6 +1,6 @@
-package yte.app.application.address.controller.requests;
+package tedorm.app.application.address.controller.requests;
 
-import yte.app.application.address.entity.Address;
+import tedorm.app.application.address.entity.Address;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

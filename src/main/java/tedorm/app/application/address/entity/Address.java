@@ -1,9 +1,9 @@
-package yte.app.application.address.entity;
+package tedorm.app.application.address.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yte.app.application.common.entity.BaseEntity;
+import tedorm.app.application.common.entity.BaseEntity;
 
 import javax.persistence.Entity;
 

@@ -1,12 +1,12 @@
-package yte.app.application.address.controller;
+package tedorm.app.application.address.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import yte.app.application.address.controller.requests.AddAddressRequest;
-import yte.app.application.address.controller.responses.AddressResponse;
-import yte.app.application.address.service.AddressService;
-import yte.app.application.common.response.MessageResponse;
+import tedorm.app.application.address.controller.requests.AddAddressRequest;
+import tedorm.app.application.address.controller.responses.AddressResponse;
+import tedorm.app.application.address.service.AddressService;
+import tedorm.app.application.common.response.MessageResponse;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

@@ -1,13 +1,13 @@
-package yte.app.application.permissions.controller;
+package tedorm.app.application.permissions.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import yte.app.application.common.response.MessageResponse;
-import yte.app.application.permissions.controller.requests.AddPermissionsRequest;
-import yte.app.application.permissions.controller.requests.UpdatePermissionsRequest;
-import yte.app.application.permissions.controller.responses.PermissionsResponse;
-import yte.app.application.permissions.service.PermissionsService;
+import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.permissions.controller.requests.AddPermissionsRequest;
+import tedorm.app.application.permissions.controller.requests.UpdatePermissionsRequest;
+import tedorm.app.application.permissions.controller.responses.PermissionsResponse;
+import tedorm.app.application.permissions.service.PermissionsService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

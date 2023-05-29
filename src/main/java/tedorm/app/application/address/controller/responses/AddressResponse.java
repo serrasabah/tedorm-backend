@@ -1,6 +1,6 @@
-package yte.app.application.address.controller.responses;
+package tedorm.app.application.address.controller.responses;
 
-import yte.app.application.address.entity.Address;
+import tedorm.app.application.address.entity.Address;
 
 public record AddressResponse(
         Long id,

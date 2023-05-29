@@ -1,7 +1,7 @@
-package yte.app.application.permissions.controller.requests;
+package tedorm.app.application.permissions.controller.requests;
 
-import yte.app.application.address.entity.Address;
-import yte.app.application.permissions.entity.Permissions;
+import tedorm.app.application.address.entity.Address;
+import tedorm.app.application.permissions.entity.Permissions;
 
 import java.time.LocalDateTime;
 

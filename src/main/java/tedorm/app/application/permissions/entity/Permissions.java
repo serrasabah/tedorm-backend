@@ -1,12 +1,12 @@
-package yte.app.application.permissions.entity;
+package tedorm.app.application.permissions.entity;
 
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yte.app.application.address.entity.Address;
-import yte.app.application.common.entity.BaseEntity;
-import yte.app.application.student.entity.Student;
+import tedorm.app.application.address.entity.Address;
+import tedorm.app.application.common.entity.BaseEntity;
+import tedorm.app.application.student.entity.Student;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

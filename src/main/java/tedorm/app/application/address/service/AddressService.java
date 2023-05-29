@@ -1,11 +1,11 @@
-package yte.app.application.address.service;
+package tedorm.app.application.address.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yte.app.application.address.entity.Address;
-import yte.app.application.address.repository.AddressRepository;
-import yte.app.application.common.response.MessageResponse;
-import yte.app.application.common.response.ResponseType;
+import tedorm.app.application.address.entity.Address;
+import tedorm.app.application.address.repository.AddressRepository;
+import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.common.response.ResponseType;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
