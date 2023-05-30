@@ -14,8 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnnouncementService {
 
-    //TO-DO  absence information ile olan bağlantı sağlanacak.
-    //TO-DO
     private final AnnouncementRepository announcementRepository;
 
     public Announcement getAnnouncement(Long id) {
