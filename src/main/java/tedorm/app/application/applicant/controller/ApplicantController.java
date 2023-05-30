@@ -38,4 +38,8 @@ public class ApplicantController {
         return new ApplicantResponse(applicantService.getById(id));
     }
 
+    @DeleteMapping("/{id}")
+    public MessageResponse deleteApplicantById(@PathVariable @NotNull Long id) {
+        return applicantService.deleteApplicantById(id);
+    }
 }

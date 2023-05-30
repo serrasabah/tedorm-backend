@@ -2,6 +2,8 @@ package tedorm.app.application.applicant.controller.responses;
 
 import tedorm.app.application.applicant.entity.Applicant;
 
+import java.time.LocalDate;
+
 public record ApplicantResponse(
         Long id,
         String name,
@@ -10,7 +12,10 @@ public record ApplicantResponse(
         String email,
         String address,
         String university,
-        int roomType
+        int roomType,
+        LocalDate age,
+        String tcKimlikNo,
+        String studentNumber
 
 ) {
 
@@ -23,7 +28,10 @@ public record ApplicantResponse(
                 applicant.getEmail(),
                 applicant.getAddress(),
                 applicant.getUniversity(),
-                applicant.getRoomType()
+                applicant.getRoomType(),
+                applicant.getAge(),
+                applicant.getTcKimlikNo(),
+                applicant.getStudentNumber()
         );
     }
 }

@@ -13,11 +13,11 @@ public record AddStudentRequest(
         @NotBlank
         @Size(max = 25)
         String surname,
-        String email,
         @NotBlank
+        String email,
+
         String tcKimlikNo,
 
-        @NotBlank
         String studentNumber,
 
         LocalDate age,
@@ -25,12 +25,13 @@ public record AddStudentRequest(
         String roomNumber,
         @NotBlank
         String university,
-
         @NotBlank
-        String phoneNumber
+        String phoneNumber,
+        Integer roomType,
+        String address
 ) {
 
     public Student toDomainEntity() {
-        return new Student(name, surname, email, tcKimlikNo, studentNumber, age, roomNumber, university, phoneNumber);
+        return new Student(name, surname, email, tcKimlikNo, studentNumber, age, roomNumber, university, phoneNumber, roomType, address);
     }
 }
