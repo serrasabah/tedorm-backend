@@ -6,10 +6,12 @@ public record UpdateStudentRequest(
         String email,
         String phoneNumber,
          String university,
-        String roomNumber
+        String roomNumber,
+        Integer roomType,
+        String address
 ) {
 
     public Student toDomainEntity() {
-        return new Student(null, null, email, null, null, null, roomNumber, university, phoneNumber);
+        return new Student(null, null, email, null, null, null, roomNumber, university, phoneNumber, roomType, address);
     }
 }

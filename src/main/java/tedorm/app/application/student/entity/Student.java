@@ -31,7 +31,10 @@ public class Student extends BaseEntity {
 
     private String university;
 
+    private Integer roomType;
     private String phoneNumber;
+
+    private String address;
 
     public Student(String name,
                    String surname,
@@ -41,7 +44,9 @@ public class Student extends BaseEntity {
                    LocalDate age,
                    String roomNumber,
                    String university,
-                   String phoneNumber) {
+                   String phoneNumber,
+                   Integer roomType,
+                   String address) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -51,6 +56,8 @@ public class Student extends BaseEntity {
         this.roomNumber = roomNumber;
         this.university = university;
         this.phoneNumber = phoneNumber;
+        this.roomType = roomType;
+        this.address = address;
     }
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -65,6 +72,7 @@ public class Student extends BaseEntity {
         this.phoneNumber = updatedStudent.phoneNumber;
         this.university = updatedStudent.university;
         this.roomNumber=updatedStudent.roomNumber;
+        this.roomType = updatedStudent.roomType;
     }
 
     public void addFile(FileData fileData) {

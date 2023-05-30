@@ -30,4 +30,11 @@ public class ApplicantService {
                 .orElseThrow(() -> new EntityNotFoundException("Applicant not found"));
     }
 
+
+    public MessageResponse deleteApplicantById(Long id) {
+        applicantRepository.deleteById(id);
+
+        return new MessageResponse(ResponseType.SUCCESS, "Applicant has been deleted successfully");
+    }
+
 }
