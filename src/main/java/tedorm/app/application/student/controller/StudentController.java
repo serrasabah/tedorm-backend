@@ -27,6 +27,12 @@ public class StudentController {
     public MessageResponse addStudent(@Valid @RequestBody AddStudentRequest addStudentRequest) {
         return studentService.addStudent(addStudentRequest.toDomainEntity());
     }
+
+    @PostMapping("/addApplicantToStudent")
+    public MessageResponse addApplicantToStudent(@Valid @RequestBody AddStudentRequest addStudentRequest) {
+        return studentService.addStudent(addStudentRequest.toDomainEntity());
+    }
+
     @PostMapping("/changePassword/{id}")
     public MessageResponse changePassword(@Valid @RequestBody ChangePasswordRequest request, @PathVariable Long id) {
         return studentService.changePassword(id, request);
