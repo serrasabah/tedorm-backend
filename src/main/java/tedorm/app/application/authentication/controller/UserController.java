@@ -8,6 +8,8 @@ import tedorm.app.application.authentication.service.UserService;
 import tedorm.app.application.authentication.controller.request.AddUserRequest;
 import tedorm.app.application.authentication.controller.responses.UserQueryModel;
 import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.student.controller.responses.StudentQueryModel;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -37,6 +39,11 @@ public class UserController {
     @GetMapping("/{id}")
     public UserQueryModel getById(@NotNull @PathVariable Long id) {
         return new UserQueryModel(userService.getById(id));
+    }
+
+    @GetMapping("/student/{id}")
+    public StudentQueryModel getStudentByUserId(@NotNull @PathVariable Long id) {
+        return new StudentQueryModel(userService.getStudentByUserId(id));
     }
 
     @PostMapping("/forgotPassword")

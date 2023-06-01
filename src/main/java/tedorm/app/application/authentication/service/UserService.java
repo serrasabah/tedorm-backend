@@ -10,6 +10,8 @@ import tedorm.app.application.authentication.repository.UserRepository;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
 import tedorm.app.application.student.entity.EmailDetails;
+import tedorm.app.application.student.entity.Student;
+import tedorm.app.application.student.repository.StudentRepository;
 import tedorm.app.application.student.service.EmailService;
 import tedorm.app.application.student.service.StudentService;
 
@@ -24,6 +26,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final StudentService studentService;
     private final EmailService emailService;
+
+    private final StudentRepository studentRepository;
 
     @Transactional
     public MessageResponse addUsers(User user) {
@@ -45,6 +49,14 @@ public class UserService {
     public User getById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public Student getStudentByUserId(Long id) {
+        User user= userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Student s = studentRepository.findByEmail(user.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return s;
     }
 
     @Transactional

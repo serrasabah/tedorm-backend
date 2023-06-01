@@ -30,12 +30,12 @@ public class Permissions extends BaseEntity {
 
     public Permissions(Address address,LocalDateTime permissionDateStart,
                        LocalDateTime permissionDateEnd, String message,
-                       Long studentId) {
+                       Long studentId, Long addressId) {
         this.address = address;
         this.permissionDateStart = permissionDateStart;
         this.permissionDateEnd = permissionDateEnd;
         this.message = message;
-
+        this.address.setId(addressId);
         this.student=new Student();
         this.student.setId(studentId);
     }

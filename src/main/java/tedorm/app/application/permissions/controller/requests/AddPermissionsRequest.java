@@ -9,14 +9,16 @@ public record AddPermissionsRequest(
         //@NotBlank
         String name,
         String phoneNumber,
+
+        Long addressId,
         String address,
 
-         LocalDateTime permissionDateStart,
-                 LocalDateTime permissionDateEnd,
+        LocalDateTime permissionDateStart,
+        LocalDateTime permissionDateEnd,
         String message,
         Long studentId
 ) {
     public Permissions toDomainEntity() {
-        return new Permissions( new Address( name,  phoneNumber, address),permissionDateStart, permissionDateEnd,message,studentId);
+        return new Permissions( new Address( name,  phoneNumber, address),permissionDateStart, permissionDateEnd,message,studentId, addressId);
     }
 }

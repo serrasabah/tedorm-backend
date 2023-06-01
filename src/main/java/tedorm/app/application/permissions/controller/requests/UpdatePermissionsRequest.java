@@ -10,9 +10,10 @@ public record UpdatePermissionsRequest(
         LocalDateTime permissionDateStart,
         LocalDateTime permissionDateEnd,
         String message,
-        Long studentId
+        Long studentId,
+        Long addressId
 ) {
     public Permissions toDomainEntity() {
-        return new Permissions( new Address( name,  phoneNumber, address),permissionDateStart, permissionDateEnd, message,studentId);
+        return new Permissions( new Address( name,  phoneNumber, address),permissionDateStart, permissionDateEnd, message,studentId, addressId);
     }
 }

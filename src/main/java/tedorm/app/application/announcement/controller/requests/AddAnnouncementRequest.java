@@ -6,10 +6,9 @@ import javax.validation.constraints.NotBlank;
 
 public record AddAnnouncementRequest(
         @NotBlank
-        String announcement,
-        Long adminId
+        String announcement
 ) {
     public Announcement toDomainEntity() {
-        return new Announcement( announcement, adminId);
+        return new Announcement( announcement);
     }
 }
