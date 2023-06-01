@@ -10,6 +10,7 @@ import tedorm.app.application.admin.controller.response.AdminResponse;
 import tedorm.app.application.admin.service.AdminService;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.student.controller.requests.AddStudentRequest;
+import tedorm.app.application.student.controller.requests.ChangePasswordRequest;
 import tedorm.app.application.student.controller.requests.UpdateStudentRequest;
 import tedorm.app.application.student.controller.responses.StudentQueryModel;
 import tedorm.app.application.student.service.StudentService;
@@ -58,5 +59,10 @@ public class AdminController {
                 .stream()
                 .map(admin -> new AdminResponse(admin))
                 .toList();
+    }
+
+    @PostMapping("/changePassword/{id}")
+    public MessageResponse changePassword(@Valid @RequestBody ChangePasswordRequest request, @PathVariable Long id) {
+        return studentService.changePassword(id, request);
     }
 }

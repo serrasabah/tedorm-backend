@@ -20,17 +20,24 @@ public class Admin extends BaseEntity {
 
     private  String name;
     private  String surname;
+    private String email;
+    private String password;
     
     @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 
-    public Admin(String name, String surname) {
+    public Admin(String name, String surname, String email, String password) {
         this.name = name;
         this.surname = surname;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Admin(String email) {
+        this.email = email;
     }
 
     public void update(Admin updateAdmin) {
-        this.name = updateAdmin.name;
-        this.surname = updateAdmin.surname;
+        this.email = updateAdmin.email;
     }
 }
