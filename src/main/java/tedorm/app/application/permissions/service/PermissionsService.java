@@ -29,8 +29,6 @@ public class PermissionsService {
                 .orElseThrow(() -> new EntityNotFoundException("Permission not found"));
     }
     public List<Permissions> getAllPermissions() {
-
-
         return permissionsRepository.findAll();
     }
 
