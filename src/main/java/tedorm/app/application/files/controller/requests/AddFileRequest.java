@@ -17,7 +17,7 @@ public record AddFileRequest (
     String type,
 
     String filename,
-    Blob imageData
+    byte[] imageData
 
 ) {
 

@@ -65,7 +65,7 @@ public class StudentService {
         user.setUsername(student.getEmail());
         String password = generateRandomPassword();
         user.setPassword(passwordEncoder.encode(password));
-
+/*
         EmailDetails details = new EmailDetails();
         details.setRecipient(student.getEmail());
         details.setSubject("TEDORM USER INFORMATION");
@@ -74,6 +74,8 @@ public class StudentService {
         if(!result){
             return new MessageResponse(ResponseType.WARNING, "mail could not be sent");
         }
+
+ */
     //    student.setUser(user);
         user.setStudent(student);
         studentRepository.save(student);

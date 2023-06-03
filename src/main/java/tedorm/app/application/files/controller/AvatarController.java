@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tedorm.app.application.common.response.MessageResponse;
+import tedorm.app.application.common.response.ResponseType;
 import tedorm.app.application.files.controller.responses.AvatarDataQueryModel;
+import tedorm.app.application.files.entity.AvatarData;
 import tedorm.app.application.files.service.AvatarService;
 
 import javax.validation.constraints.NotNull;
@@ -23,18 +25,25 @@ public class AvatarController {
     private AvatarService service;
 
     @PostMapping
-    public MessageResponse uploadImage(@RequestParam("avatar")MultipartFile file, Long id) throws IOException {
-        return service.uploadImage(file, id);
+    public MessageResponse uploadImage(@RequestParam("avatar") MultipartFile file, Long id) throws IOException {
+        AvatarData savedImageData = service.uploadImage(file, id);
+        if (savedImageData == null) {
+            return new MessageResponse(ResponseType.WARNING, "ERROR");
+        }
+        String imageUrl = "/images/" + savedImageData.getId(); // Construct the URL based on the saved image data (e.g., ID)
+        return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + file.getOriginalFilename());
     }
+
 
     @GetMapping("/{fileName}")
-    public ResponseEntity<?> downloadImage(@PathVariable String fileName){
-        byte[] imageData=service.downloadImage(fileName);
-        return ResponseEntity.status(HttpStatus.OK)
+    public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
+        byte[] imageData = service.downloadImage(fileName);
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
-
     }
+
 
     @GetMapping("/list/{id}")
     public List<AvatarDataQueryModel> getById(@NotNull @PathVariable Long id) {
@@ -43,4 +52,6 @@ public class AvatarController {
                 .map(file -> new AvatarDataQueryModel(file))
                 .toList();
     }
+
+
 }

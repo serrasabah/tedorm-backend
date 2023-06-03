@@ -29,7 +29,7 @@ public class AvatarService {
     String[] variableFileTypes = {"image/png",
             "image/jpeg"};
 
-    public MessageResponse uploadImage(MultipartFile file, Long id) throws IOException {
+    public AvatarData uploadImage(MultipartFile file, Long id) throws IOException {
         Student student = studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Student not found"));
 
         AvatarData imageData = AvatarData.builder()
@@ -39,13 +39,13 @@ public class AvatarService {
                 .student(student)
                 .build();
         if (imageData == null || !(Arrays.stream(variableFileTypes).anyMatch(type -> imageData.getType().contains(type)))) {
-            return new MessageResponse(ResponseType.WARNING, "ERROR");
-
+            return null;
         }
-        repository.save(imageData);
-        return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + file.getOriginalFilename());
 
+        return repository.save(imageData);
     }
+
+
 
     public byte[] downloadImage(String fileName){
         Optional<AvatarData> dbImageData = repository.findByName(fileName);

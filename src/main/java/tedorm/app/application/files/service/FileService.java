@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class FileService {
 
@@ -42,15 +43,13 @@ public class FileService {
         Student student = studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Student not found"));
         List<FileData> fileDataList = fileRepository.findByStudentId(id);
 
-        Blob imageData = new SerialBlob(FileUtils.compressImage(file.getBytes()));
 
         FileData fileData = FileData.builder()
                 .filename(file.getOriginalFilename())
                 .type(file.getContentType())
-                .imageData(imageData)
                 .name(name)
                 .student(student)
-                .build();
+                .imageData(FileUtils.compressImage(file.getBytes())).build();
 
         if (fileDataList.stream().anyMatch(x -> x.getName().equals(fileData.getName()))) {
             return new MessageResponse(ResponseType.WARNING, fileData.getName() + " önceden yüklenmiş!");
@@ -76,14 +75,9 @@ public class FileService {
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("File not found"));
 
-        Blob imageData = dbImageData.getImageData();
-        try {
-            byte[] fileContent = imageData.getBytes(1, (int) imageData.length());
-            return FileUtils.decompressImage(fileContent);
-        } catch (SQLException ex) {
-            // Handle any exceptions that may occur during blob retrieval or decompression
-            throw new RuntimeException("Failed to download image", ex);
-        }
+        byte[] imageData = dbImageData.getImageData();
+        byte[] images=FileUtils.decompressImage(dbImageData.getImageData());
+        return images;
     }
 
 
@@ -93,7 +87,8 @@ public class FileService {
 
     public List<FileData> getById(Long id) {
         List<FileData> fileDataList = fileRepository.findByStudentId(id);
-        return fileDataList;    }
+        return fileDataList;
+    }
 
     public String getContentTypeForFileName(String fileName) {
         String contentType;

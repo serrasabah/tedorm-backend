@@ -20,29 +20,26 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TypeDefs({
-        @TypeDef(name = "blob", typeClass = org.hibernate.type.BlobType.class)
-})
 public class FileData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
     private String filename;
     private String type;
-    private String name;
-
     @Lob
-    @Type(type = "blob")
-    @Column(name = "filedata", columnDefinition = "bytea")
-    private Blob imageData;
+    @Column(name = "imagedata")
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] imageData;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
 
-    public FileData(String name, String type, String filename, Blob imageData) {
+    public FileData(String name, String type, String filename, byte[] imageData) {
         this.name=name;
         this.type=type;
         this.filename=filename;
