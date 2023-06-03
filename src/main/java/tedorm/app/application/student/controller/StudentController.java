@@ -30,7 +30,7 @@ public class StudentController {
 
     @PostMapping("/addApplicantToStudent")
     public MessageResponse addApplicantToStudent(@Valid @RequestBody AddStudentRequest addStudentRequest) {
-        return studentService.addStudent(addStudentRequest.toDomainEntity());
+        return studentService.addApplicantToStudent(addStudentRequest.toDomainEntity());
     }
 
     @PostMapping("/changePassword/{id}")

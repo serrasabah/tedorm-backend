@@ -47,10 +47,17 @@ public class StudentService {
 
     public MessageResponse addStudent(Student student) {
         if(studentRepository.existsByEmail(student.getEmail())){
-            return new MessageResponse(ResponseType.WARNING, "Username already exists");
+            return new MessageResponse(ResponseType.WARNING, "Email already exists");
         }
+
+
         if(!emailValidation(student.getEmail())){
             return new MessageResponse(ResponseType.WARNING, "Invalid Email Address");
+        }
+
+        boolean roomResult = checkRoomAvaliable(student);
+        if(!roomResult){
+            return new MessageResponse(ResponseType.WARNING, "No available room in the specified room type! Please check room page");
         }
 
         User user = new User();
@@ -58,11 +65,6 @@ public class StudentService {
         user.setUsername(student.getEmail());
         String password = generateRandomPassword();
         user.setPassword(passwordEncoder.encode(password));
-
-        boolean roomResult = checkRoomAvaliable(student);
-        if(!roomResult){
-            return new MessageResponse(ResponseType.WARNING, "No available room in the specified room type! Please check room page");
-        }
 
         EmailDetails details = new EmailDetails();
         details.setRecipient(student.getEmail());
@@ -72,7 +74,7 @@ public class StudentService {
         if(!result){
             return new MessageResponse(ResponseType.WARNING, "mail could not be sent");
         }
-        student.setUser(user);
+    //    student.setUser(user);
         user.setStudent(student);
         studentRepository.save(student);
         userRepository.save(user);
@@ -87,11 +89,18 @@ public class StudentService {
         if(!emailValidation(student.getEmail())){
             return new MessageResponse(ResponseType.WARNING, "Invalid Email Address");
         }
+
+        boolean roomResult = checkRoomAvaliable(student);
+        if(!roomResult){
+            return new MessageResponse(ResponseType.WARNING, "No available room in the specified room type! Please check room page");
+        }
+
         User user = new User();
         user.getAuthorities().add(new Authority("STUDENT"));
         user.setUsername(student.getEmail());
         String password = generateRandomPassword();
         user.setPassword(passwordEncoder.encode(password));
+
         EmailDetails details = new EmailDetails();
         details.setRecipient(student.getEmail());
         details.setSubject("TEDORM USER INFORMATION");
@@ -100,14 +109,12 @@ public class StudentService {
         if(!result){
             return new MessageResponse(ResponseType.WARNING, "mail could not be sent");
         }
-        student.setUser(user);
+        Applicant applicant = applicantRepository.findByEmail(student.getEmail());
+        applicantRepository.delete(applicant);
+     //   student.setUser(user);
         user.setStudent(student);
         studentRepository.save(student);
         userRepository.save(user);
-
-        Applicant applicant = applicantRepository.findByEmail(student.getEmail());
-        applicantRepository.delete(applicant);
-
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");
     }
 
