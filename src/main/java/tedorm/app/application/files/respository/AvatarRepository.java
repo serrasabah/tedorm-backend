@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AvatarRepository extends JpaRepository<AvatarData,Long> {
 
-        List<AvatarData> findByStudentId(Long id);
+        AvatarData findByStudentId(Long id);
 
         Optional<AvatarData> findByName(String fileName);
         }

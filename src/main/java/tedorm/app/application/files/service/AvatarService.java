@@ -1,5 +1,7 @@
 package tedorm.app.application.files.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,9 +16,7 @@ import tedorm.app.application.student.repository.StudentRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AvatarService {
@@ -32,6 +32,10 @@ public class AvatarService {
     public AvatarData uploadImage(MultipartFile file, Long id) throws IOException {
         Student student = studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Student not found"));
 
+        if (!student.getFiles().isEmpty()) {
+            return null;
+        }
+
         AvatarData imageData = AvatarData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
@@ -46,14 +50,19 @@ public class AvatarService {
     }
 
 
-
-    public byte[] downloadImage(String fileName){
+    public byte[] downloadImage(String fileName) {
         Optional<AvatarData> dbImageData = repository.findByName(fileName);
-        byte[] images=FileUtils.decompressImage(dbImageData.get().getImageData());
+        byte[] images = FileUtils.decompressImage(dbImageData.get().getImageData());
         return images;
     }
 
-    public List<AvatarData> getById(Long id) {
-        List<AvatarData> fileDataList = repository.findByStudentId(id);
-        return fileDataList;    }
+    public String getById(Long id) throws JsonProcessingException {
+        AvatarData fileDataList = repository.findByStudentId(id);
+        String imageUrl = "/images/" + fileDataList.getName();
+
+        Map<String, String> response = new HashMap<>();
+        response.put("imageUrl", imageUrl);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(response);
+    }
 }

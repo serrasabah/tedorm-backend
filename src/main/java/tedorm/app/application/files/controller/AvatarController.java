@@ -1,5 +1,6 @@
 package tedorm.app.application.files.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,11 +11,14 @@ import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
 import tedorm.app.application.files.controller.responses.AvatarDataQueryModel;
 import tedorm.app.application.files.entity.AvatarData;
+import tedorm.app.application.files.respository.AvatarRepository;
 import tedorm.app.application.files.service.AvatarService;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -24,6 +28,9 @@ public class AvatarController {
     @Autowired
     private AvatarService service;
 
+    @Autowired
+    private AvatarRepository repository;
+
     @PostMapping
     public MessageResponse uploadImage(@RequestParam("avatar") MultipartFile file, Long id) throws IOException {
         AvatarData savedImageData = service.uploadImage(file, id);
@@ -31,7 +38,7 @@ public class AvatarController {
             return new MessageResponse(ResponseType.WARNING, "ERROR");
         }
         String imageUrl = "/images/" + savedImageData.getId(); // Construct the URL based on the saved image data (e.g., ID)
-        return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + file.getOriginalFilename());
+        return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + imageUrl);
     }
 
 
@@ -46,12 +53,16 @@ public class AvatarController {
 
 
     @GetMapping("/list/{id}")
-    public List<AvatarDataQueryModel> getById(@NotNull @PathVariable Long id) {
-        return service.getById(id)
-                .stream()
-                .map(file -> new AvatarDataQueryModel(file))
-                .toList();
+    public ResponseEntity<Map<String, String>> getById(@PathVariable Long id) {
+        AvatarData fileData = repository.findByStudentId(id);
+        String imageUrl = "/images/" + fileData.getName();
+
+        Map<String, String> response = new HashMap<>();
+        response.put("imageUrl", imageUrl);
+
+        return ResponseEntity.ok(response);
     }
+
 
 
 }

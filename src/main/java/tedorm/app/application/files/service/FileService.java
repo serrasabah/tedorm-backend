@@ -37,9 +37,14 @@ public class FileService {
     private UserRepository userRepository;
 
     String[] variableFileTypes = {"application/pdf", "image/png",
-                                "image/jpeg"};
+                                "image/jpeg", "image/jpg"};
 
     public MessageResponse uploadImage(MultipartFile file, String name, Long id) throws IOException, SQLException {
+
+        if (file.getSize() > 1048576) {
+            return new MessageResponse(ResponseType.WARNING, "Dosya boyutu çok büyük");
+        }
+
         Student student = studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Student not found"));
         List<FileData> fileDataList = fileRepository.findByStudentId(id);
 
@@ -98,6 +103,8 @@ public class FileService {
             contentType = "image/png";
         } else if (fileName.endsWith(".jpeg")) {
             contentType = "image/jpeg";
+        } else if (fileName.endsWith(".jpg")) {
+            contentType = "image/jpg";
         } else {
             contentType = "application/octet-stream";
         }

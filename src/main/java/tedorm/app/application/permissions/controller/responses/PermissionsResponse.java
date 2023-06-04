@@ -8,7 +8,8 @@ public record PermissionsResponse(
         Long id,
         LocalDateTime permissionDateStart,
         LocalDateTime  permissionDateEnd,
-        String message
+        String message,
+        String name
 ) {
 
     public PermissionsResponse(Permissions permissions) {
@@ -16,7 +17,9 @@ public record PermissionsResponse(
                 permissions.getId(),
                 permissions.getPermissionDateStart(),
                 permissions.getPermissionDateEnd(),
-                permissions.getMessage()
+                permissions.getMessage(),
+                permissions.getStudent().getName()+" "+
+                permissions.getStudent().getSurname()
         );
     }
 }
