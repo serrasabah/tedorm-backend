@@ -3,6 +3,7 @@ package tedorm.app.application.authentication.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import tedorm.app.application.admin.controller.response.AdminResponse;
 import tedorm.app.application.authentication.controller.request.ForgotPasswordRequest;
 import tedorm.app.application.authentication.service.UserService;
 import tedorm.app.application.authentication.controller.request.AddUserRequest;
@@ -45,7 +46,10 @@ public class UserController {
     public StudentQueryModel getStudentByUserId(@NotNull @PathVariable Long id) {
         return new StudentQueryModel(userService.getStudentByUserId(id));
     }
-
+    @GetMapping("/admin/{id}")
+    public AdminResponse getAdminByUserId(@NotNull @PathVariable Long id) {
+        return new AdminResponse(userService.getAdminByUserId(id));
+    }
     @PostMapping("/forgotPassword")
     public MessageResponse forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         return userService.forgotPassword(request.getEmail());

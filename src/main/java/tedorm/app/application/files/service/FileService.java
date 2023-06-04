@@ -10,6 +10,8 @@ import tedorm.app.application.common.response.ResponseType;
 import tedorm.app.application.files.entity.FileData;
 import tedorm.app.application.files.respository.FileRepository;
 import tedorm.app.application.files.util.FileUtils;
+import tedorm.app.application.islemGecmisi.entity.IslemGecmisi;
+import tedorm.app.application.islemGecmisi.repository.IslemGecmisiRepository;
 import tedorm.app.application.student.entity.Student;
 import tedorm.app.application.student.repository.StudentRepository;
 
@@ -35,6 +37,8 @@ public class FileService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private IslemGecmisiRepository islemGecmisiRepository;
 
     String[] variableFileTypes = {"application/pdf", "image/png",
                                 "image/jpeg", "image/jpg"};
@@ -65,7 +69,9 @@ public class FileService {
         }
 
         fileRepository.save(fileData);
-
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "belge yükledi." + student.getCreatedDate() + "belge adı: " + fileData.getFilename());
+        islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + file.getOriginalFilename());
     }
 
@@ -120,6 +126,9 @@ public class FileService {
                 .orElseThrow(() -> new EntityNotFoundException("File not found"));
 
         fileRepository.deleteById(dbImageData.getId());
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(dbImageData.getStudent().getName() + " " + dbImageData.getStudent().getSurname() + "belge yükledi." + dbImageData.getStudent().getCreatedDate() + "belge adı: " + dbImageData.getFilename());
+        islemGecmisiRepository.save(islemGecmisi);
 
         return new MessageResponse(ResponseType.SUCCESS, "File has been deleted successfully");
     }

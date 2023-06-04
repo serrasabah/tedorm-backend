@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tedorm.app.application.admin.repository.AdminRepository;
 import tedorm.app.application.applicant.entity.Applicant;
 import tedorm.app.application.applicant.repository.ApplicantRepository;
 import tedorm.app.application.authentication.entity.Authority;
@@ -15,6 +16,8 @@ import tedorm.app.application.authentication.repository.UserRepository;
 import tedorm.app.application.authentication.service.UserService;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
+import tedorm.app.application.islemGecmisi.entity.IslemGecmisi;
+import tedorm.app.application.islemGecmisi.repository.IslemGecmisiRepository;
 import tedorm.app.application.rooms.entity.Room;
 import tedorm.app.application.rooms.repository.RoomRepository;
 import tedorm.app.application.student.controller.requests.ChangePasswordRequest;
@@ -38,6 +41,11 @@ import static org.apache.naming.SelectorContext.prefix;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+
+    private final IslemGecmisiRepository islemGecmisiRepository;
+
+    private AdminRepository adminRepository;
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ApplicantRepository applicantRepository;
@@ -80,7 +88,9 @@ public class StudentService {
         user.setStudent(student);
         studentRepository.save(student);
         userRepository.save(user);
-
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci eklendi." + student.getCreatedDate());
+        islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");
     }
 
@@ -117,6 +127,9 @@ public class StudentService {
         user.setStudent(student);
         studentRepository.save(student);
         userRepository.save(user);
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci eklendi." + student.getCreatedDate());
+        islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");
     }
 
@@ -137,6 +150,9 @@ public class StudentService {
             room.setAvailableSlots(room.getAvailableSlots() + 1);
         }
         studentRepository.deleteById(id);
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci silindi." + student.getCreatedDate());
+        islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Student has been deleted successfully");
     }
 
@@ -158,7 +174,9 @@ public class StudentService {
         student.update(updatedStudent);
 
         studentRepository.save(student);
-
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci bilgileri güncellendi." + student.getCreatedDate());
+        islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
     }
 

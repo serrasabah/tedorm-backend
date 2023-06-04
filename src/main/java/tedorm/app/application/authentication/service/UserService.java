@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tedorm.app.application.admin.entity.Admin;
+import tedorm.app.application.admin.repository.AdminRepository;
 import tedorm.app.application.authentication.entity.Authority;
 import tedorm.app.application.authentication.entity.User;
 import tedorm.app.application.authentication.repository.UserRepository;
@@ -28,6 +30,7 @@ public class UserService {
     private final EmailService emailService;
 
     private final StudentRepository studentRepository;
+    private final AdminRepository adminRepository;
 
     @Transactional
     public MessageResponse addUsers(User user) {
@@ -58,7 +61,13 @@ public class UserService {
         Student s = studentRepository.findByEmail(user.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));
         return s;
     }
-
+    @Transactional(readOnly = true)
+    public Admin getAdminByUserId(Long id) {
+        User user= userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Admin admin = adminRepository.findByEmail(user.getUsername()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return admin;
+    }
     @Transactional
     public MessageResponse deleteUserById(Long id) {
         String name = userRepository.findById(id).orElseThrow().getUsername();

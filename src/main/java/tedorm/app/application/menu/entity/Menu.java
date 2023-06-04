@@ -28,6 +28,8 @@ public class Menu extends BaseEntity {
     private String food;
     private String day;
 
+    private Double puan;
+
     public Menu(LocalDate date, Meal meal, String food) {
         this.date = date;
         this.meal = meal;

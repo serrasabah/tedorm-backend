@@ -10,7 +10,8 @@ public record ListMenuResponse(
          LocalDate date,
          Meal meal,
          String food,
-         String day
+         String day,
+        Double puan
 ) {
 
     public ListMenuResponse(Menu menu) {
@@ -19,7 +20,8 @@ public record ListMenuResponse(
                 menu.getDate(),
                 menu.getMeal(),
                 menu.getFood(),
-                menu.getDay()
+                menu.getDay(),
+                menu.getPuan()
         );
     }
 
