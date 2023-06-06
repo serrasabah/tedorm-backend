@@ -70,7 +70,7 @@ public class FileService {
         IslemGecmisi islemGecmisi = new IslemGecmisi();
         islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " uploaded the document. " + student.getCreatedDate() + " File name: " + fileData.getFilename());
         islemGecmisiRepository.save(islemGecmisi);
-        return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + file.getOriginalFilename());
+        return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully");
     }
 
 

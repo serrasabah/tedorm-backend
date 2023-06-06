@@ -69,7 +69,7 @@ public class StudentController {
         return studentService.updateStudent(id, request.toDomainEntity());
     }
 
-    @PutMapping("/admin/{id}")
+    @PutMapping("/x/{id}")
     public MessageResponse updateStudentForAdmin(@Valid @RequestBody UpdateStudentForAdmin request, @PathVariable Long id) {
         return studentService.updateStudentForAdmin(id, request.toDomainEntity());
     }

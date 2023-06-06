@@ -68,11 +68,12 @@ public class Student extends BaseEntity {
     private List<FileData> files = new ArrayList<>();
 
     public void update(Student updatedStudent) {
-        this.email = updatedStudent.email;
-        this.phoneNumber = updatedStudent.phoneNumber;
-        this.university = updatedStudent.university;
         this.roomNumber=updatedStudent.roomNumber;
         this.roomType = updatedStudent.roomType;
+    }
+
+    public void updateForAdmin(Student updatedStudent) {
+        this.phoneNumber = updatedStudent.phoneNumber;
     }
 
     public void addFile(FileData fileData) {

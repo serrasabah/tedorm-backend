@@ -94,7 +94,7 @@ public class StudentService {
                 + "    \n"
                 + "    \n"
                 + "        \n"
-                + "            Best regards,<br>\n"
+                + "            Best regards,\n"
                 + "            TEDU Dormitories Directorate\n"
                 + "        \n"
                 + "    \n";
@@ -161,7 +161,7 @@ public class StudentService {
                         + "    \n"
                         + "    \n"
                         + "        \n"
-                        + "            Best regards,<br>\n"
+                        + "            Best regards,\n"
                         + "            TEDU Dormitories Directorate\n"
                         + "        \n"
                         + "    \n";
@@ -177,7 +177,7 @@ public class StudentService {
         studentRepository.save(student);
         userRepository.save(user);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " has been addedklendi. " + student.getCreatedDate());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " has been added. " + student.getCreatedDate());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");
     }
@@ -233,7 +233,7 @@ public class StudentService {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
 
-        student.update(updatedStudent);
+        student.updateForAdmin(updatedStudent);
 
         studentRepository.save(student);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
