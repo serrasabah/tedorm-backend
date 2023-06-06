@@ -177,7 +177,7 @@ public class StudentService {
         studentRepository.save(student);
         userRepository.save(user);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci eklendi." + student.getCreatedDate());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " has been addedklendi. " + student.getCreatedDate());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");
     }
@@ -200,7 +200,7 @@ public class StudentService {
         }
         studentRepository.deleteById(id);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci silindi." + student.getCreatedDate());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "was deleted." + student.getCreatedDate());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Student has been deleted successfully");
     }
@@ -224,7 +224,7 @@ public class StudentService {
 
         studentRepository.save(student);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci bilgileri güncellendi." + student.getCreatedDate());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " information has been updated. " + student.getCreatedDate());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
     }
@@ -237,7 +237,7 @@ public class StudentService {
 
         studentRepository.save(student);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci bilgileri güncellendi." + student.getCreatedDate());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " information has been updated. " + student.getCreatedDate());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
     }
