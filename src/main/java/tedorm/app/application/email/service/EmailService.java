@@ -1,4 +1,4 @@
-package tedorm.app.application.student.service;
+package tedorm.app.application.email.service;
 
 // Importing required classes
         import java.io.File;
@@ -11,7 +11,7 @@ package tedorm.app.application.student.service;
         import org.springframework.mail.javamail.JavaMailSender;
         import org.springframework.mail.javamail.MimeMessageHelper;
         import org.springframework.stereotype.Service;
-        import tedorm.app.application.student.entity.EmailDetails;
+        import tedorm.app.application.email.entity.EmailDetails;
 
 // Annotation
 @Service

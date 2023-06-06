@@ -1,4 +1,4 @@
-package tedorm.app.application.student.entity;
+package tedorm.app.application.email.entity;
 
 // Java Program to Illustrate EmailDetails Class
 

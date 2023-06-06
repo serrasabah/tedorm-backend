@@ -1,10 +1,7 @@
 package tedorm.app.application.student.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tedorm.app.application.admin.repository.AdminRepository;
@@ -13,28 +10,24 @@ import tedorm.app.application.applicant.repository.ApplicantRepository;
 import tedorm.app.application.authentication.entity.Authority;
 import tedorm.app.application.authentication.entity.User;
 import tedorm.app.application.authentication.repository.UserRepository;
-import tedorm.app.application.authentication.service.UserService;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
+import tedorm.app.application.email.service.EmailService;
 import tedorm.app.application.islemGecmisi.entity.IslemGecmisi;
 import tedorm.app.application.islemGecmisi.repository.IslemGecmisiRepository;
 import tedorm.app.application.rooms.entity.Room;
 import tedorm.app.application.rooms.repository.RoomRepository;
 import tedorm.app.application.student.controller.requests.ChangePasswordRequest;
-import tedorm.app.application.student.controller.responses.StudentQueryModel;
-import tedorm.app.application.student.entity.EmailDetails;
+import tedorm.app.application.email.entity.EmailDetails;
 import tedorm.app.application.student.entity.Student;
 import tedorm.app.application.student.repository.StudentRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static org.apache.naming.SelectorContext.prefix;
 
 @Service
 @RequiredArgsConstructor
@@ -73,23 +66,51 @@ public class StudentService {
         user.setUsername(student.getEmail());
         String password = generateRandomPassword();
         user.setPassword(passwordEncoder.encode(password));
-/*
+
         EmailDetails details = new EmailDetails();
         details.setRecipient(student.getEmail());
         details.setSubject("TEDORM USER INFORMATION");
-        details.setMsgBody("You have been successfully added to the system. " + student.getEmail() + " şifreniz: " + password);
+        String emailBody =
+                 "        Welcome to Our Platform!\n"
+                + "            Dear " + student.getName() + ",\n"
+                + "            We are pleased to inform you that you have been successfully registered on TEDORM. Welcome to our dormitory!\n"
+                + "        \n"
+                + "       \n"
+                + "            To access your account, please find below your login credentials:\n"
+                + "        \n"
+                + "        \n"
+                + "         Email: " + student.getEmail() + "\n"
+                + "          Password: " + password + "\n"
+                + "        \n"
+                + "        \n"
+                + "            Please note that the password is case-sensitive and should be kept confidential. We recommend changing your password after logging in for security purposes.\n"
+                + "        \n"
+                + "        \n"
+                + "            If you have any questions or need assistance, our support team is here to help. Feel free to reach out to us at tedorm@tedu.edu.tr or +90 312 585 02 00.\n"
+                + "        \n"
+                + "        \n"
+                + "            Thank you for choosing our dormitory. We look forward to providing you with a great experience.\n"
+                + "        \n"
+                + "    \n"
+                + "    \n"
+                + "        \n"
+                + "            Best regards,<br>\n"
+                + "            TEDU Dormitories Directorate\n"
+                + "        \n"
+                + "    \n";
+        details.setMsgBody(emailBody);
         boolean result = emailService.sendSimpleMail(details);
         if(!result){
             return new MessageResponse(ResponseType.WARNING, "mail could not be sent");
         }
 
- */
+
     //    student.setUser(user);
         user.setStudent(student);
         studentRepository.save(student);
         userRepository.save(user);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci eklendi." + student.getCreatedDate());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "student is added." + student.getCreatedDate());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "User has been added successfully");
     }
@@ -116,7 +137,35 @@ public class StudentService {
         EmailDetails details = new EmailDetails();
         details.setRecipient(student.getEmail());
         details.setSubject("TEDORM USER INFORMATION");
-        details.setMsgBody("You have been successfully added to the system. " + student.getEmail() + " şifreniz: " + password);
+        String emailBody =
+                "        Welcome to Our Platform!\n"
+                        + "            Dear " + student.getName() + ",\n"
+                        + "            We are pleased to inform you that you have been successfully registered on TEDORM. Welcome to our dormitory!\n"
+                        + "        \n"
+                        + "       \n"
+                        + "            To access your account, please find below your login credentials:\n"
+                        + "        \n"
+                        + "        \n"
+                        + "         Email: " + student.getEmail() + "\n"
+                        + "          Password: " + password + "\n"
+                        + "        \n"
+                        + "        \n"
+                        + "            Please note that the password is case-sensitive and should be kept confidential. We recommend changing your password after logging in for security purposes.\n"
+                        + "        \n"
+                        + "        \n"
+                        + "            If you have any questions or need assistance, our support team is here to help. Feel free to reach out to us at tedorm@tedu.edu.tr or +90 312 585 02 00.\n"
+                        + "        \n"
+                        + "        \n"
+                        + "            Thank you for choosing our dormitory. We look forward to providing you with a great experience.\n"
+                        + "        \n"
+                        + "    \n"
+                        + "    \n"
+                        + "        \n"
+                        + "            Best regards,<br>\n"
+                        + "            TEDU Dormitories Directorate\n"
+                        + "        \n"
+                        + "    \n";
+        details.setMsgBody(emailBody);
         boolean result = emailService.sendSimpleMail(details);
         if(!result){
             return new MessageResponse(ResponseType.WARNING, "mail could not be sent");
@@ -171,6 +220,19 @@ public class StudentService {
         if(room==null){
             return new MessageResponse(ResponseType.WARNING, "Room Not found");
         }
+        student.update(updatedStudent);
+
+        studentRepository.save(student);
+        IslemGecmisi islemGecmisi = new IslemGecmisi();
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "öğrenci bilgileri güncellendi." + student.getCreatedDate());
+        islemGecmisiRepository.save(islemGecmisi);
+        return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
+    }
+
+    public MessageResponse updateStudentForAdmin(Long id, Student updatedStudent) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+
         student.update(updatedStudent);
 
         studentRepository.save(student);

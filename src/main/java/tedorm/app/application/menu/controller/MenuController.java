@@ -8,11 +8,9 @@ import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.menu.controller.request.AddMenuRequest;
 import tedorm.app.application.menu.controller.request.UpdateMenuRequest;
 import tedorm.app.application.menu.controller.response.ListMenuResponse;
-import tedorm.app.application.menu.entity.Menu;
 import tedorm.app.application.menu.entity.Rating;
 import tedorm.app.application.menu.service.MenuService;
-import tedorm.app.application.student.controller.requests.UpdateStudentRequest;
-import tedorm.app.application.student.controller.responses.NameSurnameRoomNumStudentQueryModel;
+
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

@@ -6,15 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tedorm.app.application.admin.entity.Admin;
 import tedorm.app.application.admin.repository.AdminRepository;
-import tedorm.app.application.authentication.entity.Authority;
 import tedorm.app.application.authentication.entity.User;
 import tedorm.app.application.authentication.repository.UserRepository;
 import tedorm.app.application.common.response.MessageResponse;
 import tedorm.app.application.common.response.ResponseType;
-import tedorm.app.application.student.entity.EmailDetails;
+import tedorm.app.application.email.entity.EmailDetails;
 import tedorm.app.application.student.entity.Student;
 import tedorm.app.application.student.repository.StudentRepository;
-import tedorm.app.application.student.service.EmailService;
+import tedorm.app.application.email.service.EmailService;
 import tedorm.app.application.student.service.StudentService;
 
 import javax.persistence.EntityNotFoundException;

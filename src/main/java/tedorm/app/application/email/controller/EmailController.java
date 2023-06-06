@@ -1,11 +1,11 @@
-package tedorm.app.application.student.controller;
+package tedorm.app.application.email.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import tedorm.app.application.student.entity.EmailDetails;
-import tedorm.app.application.student.service.EmailService;
+import tedorm.app.application.email.entity.EmailDetails;
+import tedorm.app.application.email.service.EmailService;
 
 // Annotation
 @RestController

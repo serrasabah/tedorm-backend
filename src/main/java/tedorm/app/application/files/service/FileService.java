@@ -45,10 +45,6 @@ public class FileService {
 
     public MessageResponse uploadImage(MultipartFile file, String name, Long id) throws IOException, SQLException {
 
-        if (file.getSize() > 1048576) {
-            return new MessageResponse(ResponseType.WARNING, "Dosya boyutu çok büyük");
-        }
-
         Student student = studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Student not found"));
         List<FileData> fileDataList = fileRepository.findByStudentId(id);
 
@@ -60,17 +56,19 @@ public class FileService {
                 .student(student)
                 .imageData(FileUtils.compressImage(file.getBytes())).build();
 
+
+
         if (fileDataList.stream().anyMatch(x -> x.getName().equals(fileData.getName()))) {
             return new MessageResponse(ResponseType.WARNING, fileData.getName() + " önceden yüklenmiş!");
         }
 
         if (fileData == null || !(Arrays.stream(variableFileTypes).anyMatch(type -> fileData.getType().contains(type)))) {
-            return new MessageResponse(ResponseType.WARNING, "Dosya tipi uygun değil !");
+            return new MessageResponse(ResponseType.WARNING, "File type not available !");
         }
 
         fileRepository.save(fileData);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + "belge yükledi." + student.getCreatedDate() + "belge adı: " + fileData.getFilename());
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname() + " uploaded the document. " + student.getCreatedDate() + " File name: " + fileData.getFilename());
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "File uploaded successfully: " + file.getOriginalFilename());
     }
@@ -80,7 +78,6 @@ public class FileService {
     public byte[] downloadImage(String fileName, Long id) {
         List<FileData> fileDataList = fileRepository.findByStudentId(id);
 
-        // Find the FileData with the matching file name
         FileData dbImageData = fileDataList.stream()
                 .filter(fileData -> fileData.getFilename().equals(fileName))
                 .findFirst()
@@ -127,7 +124,7 @@ public class FileService {
 
         fileRepository.deleteById(dbImageData.getId());
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage(dbImageData.getStudent().getName() + " " + dbImageData.getStudent().getSurname() + "belge yükledi." + dbImageData.getStudent().getCreatedDate() + "belge adı: " + dbImageData.getFilename());
+        islemGecmisi.setMessage(dbImageData.getStudent().getName() + " " + dbImageData.getStudent().getSurname() + " deleted the document. " + dbImageData.getStudent().getCreatedDate() + " File Name: " + dbImageData.getName());
         islemGecmisiRepository.save(islemGecmisi);
 
         return new MessageResponse(ResponseType.SUCCESS, "File has been deleted successfully");

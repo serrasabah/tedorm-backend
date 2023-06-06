@@ -13,6 +13,7 @@ import tedorm.app.application.files.controller.responses.AvatarDataQueryModel;
 import tedorm.app.application.files.entity.AvatarData;
 import tedorm.app.application.files.respository.AvatarRepository;
 import tedorm.app.application.files.service.AvatarService;
+import tedorm.app.application.files.util.FileUtils;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -53,14 +54,10 @@ public class AvatarController {
 
 
     @GetMapping("/list/{id}")
-    public ResponseEntity<Map<String, String>> getById(@PathVariable Long id) {
+    public ResponseEntity<byte[]> getById(@PathVariable Long id) {
         AvatarData fileData = repository.findByStudentId(id);
-        String imageUrl = "/images/" + fileData.getName();
-
-        Map<String, String> response = new HashMap<>();
-        response.put("imageUrl", imageUrl);
-
-        return ResponseEntity.ok(response);
+        byte[] images= FileUtils.decompressImage(fileData.getImageData());
+        return ResponseEntity.ok(images);
     }
 
 

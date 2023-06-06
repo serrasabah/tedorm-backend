@@ -45,7 +45,7 @@ public class PermissionsService {
         permissions.setStudent(student);
         permissionsRepository.save(permissions);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage("permission eklendi");
+        islemGecmisi.setMessage(student.getName() + " " + student.getSurname()+ " added permission");
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Permission information has been added successfully");
     }
@@ -53,7 +53,7 @@ public class PermissionsService {
     public MessageResponse deletePermissions(Long id) {
         permissionsRepository.deleteById(id);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage("permission silindi");
+        islemGecmisi.setMessage("Permission information has been deleted.");
         islemGecmisiRepository.save(islemGecmisi);
         return new MessageResponse(ResponseType.SUCCESS, "Permission information has been deleted successfully");
     }

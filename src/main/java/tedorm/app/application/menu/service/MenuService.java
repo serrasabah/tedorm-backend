@@ -11,11 +11,8 @@ import tedorm.app.application.menu.entity.Menu;
 import tedorm.app.application.menu.entity.Rating;
 import tedorm.app.application.menu.repository.MenuRepository;
 import tedorm.app.application.menu.repository.RatingRepository;
-import tedorm.app.application.student.entity.Student;
 
 import javax.persistence.EntityNotFoundException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -103,7 +100,7 @@ public class MenuService {
         menuOptional.setPuan(oylama.getPuan());
         ratingRepository.save(oylama);
         IslemGecmisi islemGecmisi = new IslemGecmisi();
-        islemGecmisi.setMessage("puanlandı");
+        islemGecmisi.setMessage("menu rated");
         islemGecmisiRepository.save(islemGecmisi);
 
         return oylama;

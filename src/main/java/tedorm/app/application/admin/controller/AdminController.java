@@ -9,14 +9,10 @@ import tedorm.app.application.admin.controller.request.UpdateAdminRequest;
 import tedorm.app.application.admin.controller.response.AdminResponse;
 import tedorm.app.application.admin.service.AdminService;
 import tedorm.app.application.common.response.MessageResponse;
-import tedorm.app.application.student.controller.requests.AddStudentRequest;
 import tedorm.app.application.student.controller.requests.ChangePasswordRequest;
-import tedorm.app.application.student.controller.requests.UpdateStudentRequest;
-import tedorm.app.application.student.controller.responses.StudentQueryModel;
 import tedorm.app.application.student.service.StudentService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
