@@ -38,8 +38,13 @@ public class MenuService {
         LocalDate date = LocalDate.parse(menu.getDate().toString(), inputFormatter);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("EEEE");
         String finalDay = date.format(outputFormatter);
-
         menu.setDay(finalDay);
+
+        List<Menu> listMenus =  menuRepository.findAll();
+        if ((listMenus.stream().anyMatch(x -> x.getDate().equals(menu.getDate())))
+        && (listMenus.stream().anyMatch(x -> x.getMeal().equals(menu.getMeal())))) {
+            return new MessageResponse(ResponseType.WARNING, "Menu pre-added");
+        }
         menuRepository.save(menu);
         return new MessageResponse(ResponseType.SUCCESS, "Menu has been added successfully");
     }

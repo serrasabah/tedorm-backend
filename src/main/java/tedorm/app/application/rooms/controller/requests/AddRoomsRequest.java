@@ -3,6 +3,8 @@ package tedorm.app.application.rooms.controller.requests;
 import tedorm.app.application.rooms.entity.Room;
 import tedorm.app.application.student.entity.Student;
 
+import javax.validation.constraints.Min;
+
 public record AddRoomsRequest(
         Integer roomType,
         Integer availableSlots,

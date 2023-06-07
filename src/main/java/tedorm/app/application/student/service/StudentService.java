@@ -216,10 +216,14 @@ public class StudentService {
     public MessageResponse updateStudent(Long id, Student updatedStudent) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        Room updatedRoom = roomRepository.findByRoomNumber(updatedStudent.getRoomNumber());
         Room room = roomRepository.findByRoomNumber(student.getRoomNumber());
-        if(room==null){
+        if(updatedRoom==null){
             return new MessageResponse(ResponseType.WARNING, "Room Not found");
         }
+        updatedRoom.setAvailableSlots(updatedRoom.getAvailableSlots() - 1);
+        room.setAvailableSlots(room.getAvailableSlots() + 1);
+
         student.update(updatedStudent);
 
         studentRepository.save(student);
