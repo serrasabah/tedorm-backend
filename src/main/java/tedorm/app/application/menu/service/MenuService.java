@@ -9,6 +9,7 @@ import tedorm.app.application.islemGecmisi.entity.IslemGecmisi;
 import tedorm.app.application.islemGecmisi.repository.IslemGecmisiRepository;
 import tedorm.app.application.menu.entity.Menu;
 import tedorm.app.application.menu.entity.Rating;
+import tedorm.app.application.menu.entity.days.Meal;
 import tedorm.app.application.menu.repository.MenuRepository;
 import tedorm.app.application.menu.repository.RatingRepository;
 
@@ -40,11 +41,6 @@ public class MenuService {
         String finalDay = date.format(outputFormatter);
         menu.setDay(finalDay);
 
-        List<Menu> listMenus =  menuRepository.findAll();
-        if ((listMenus.stream().anyMatch(x -> x.getDate().equals(menu.getDate())))
-        && (listMenus.stream().anyMatch(x -> x.getMeal().equals(menu.getMeal())))) {
-            return new MessageResponse(ResponseType.WARNING, "Menu pre-added");
-        }
         menuRepository.save(menu);
         return new MessageResponse(ResponseType.SUCCESS, "Menu has been added successfully");
     }
